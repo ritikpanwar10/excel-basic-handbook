@@ -26,7 +26,7 @@ A structured reference guide and practice repository covering essential Excel fu
 8. [Basic Arithmetic Operators](#-basic-arithmetic-operators)
 9. [Basic Addition Formula](#-basic-addition-formula)
 10. [Calculating Totals with AutoFill](#-calculating-totals-with-autofill)
-
+11. [ Understanding Cell References in Excel](#-understanding-cell-references-in-excel)
 ---
 
 ## 📐 Worksheet Limits & Structure
