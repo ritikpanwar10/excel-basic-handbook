@@ -275,10 +275,87 @@ Move the cursor to the bottom-right corner of the active cell (e.g., `D3`) until
 </div>
 
 ---
-
 ### Step 2: Drag to AutoFill
 Click and drag the handle down through cell **D5** (or double-click the handle) to apply the calculation to all adjacent rows.
 
 <div align="center">
   <img width="460" alt="Drag Down to AutoFill" src="https://github.com/user-attachments/assets/eba6263b-bd0e-4e89-a23d-961a58a27c90" />
 </div>
+
+
+---
+
+
+## 📍 Understanding Cell References in Excel
+
+A **cell reference** identifies the location of a cell or range of cells within a worksheet, combining a column letter and a row number (e.g., `A1`, `B2`). 
+
+When copying formulas or using the **AutoFill handle**, Excel determines how coordinates shift using three primary referencing styles:
+
+---
+
+### 1. Relative Reference (`A1`)
+
+By default, Excel uses relative referencing without dollar signs (`$`). The formula coordinates automatically adjust relative to the direction you copy or drag.
+
+* **Drag Down:** Row numbers shift down (`1` → `2`).
+* **Drag Right:** Column letters move across (`A` → `B`).
+
+#### 📊 Worksheet Grid View:
+
+| Row | Column A | Column B | Column C | Column D |
+| :---: | :---: | :---: | :---: | :---: |
+| **1** | `10` | `20` | `=A1+B1` *(Result: 30)* | `=B1+C1` *(Drag Right)* |
+| **2** | `15` | `25` | `=A2+B2` *(Drag Down)* | |
+
+---
+
+### 2. Absolute Reference (`$A$1`)
+
+An absolute reference locks both the column and the row in place using dollar signs (`$`). Regardless of where the formula is copied or moved, the referenced cell remains strictly constant.
+
+> [!TIP]
+> **Shortcut:** Highlight or click a cell reference and press `F4` (or `Fn + F4`) to cycle through reference modes.
+
+#### 📊 Worksheet Grid View:
+
+| Row | Column A (Item) | Column B (Price) | Column C (Tax Rate) | Column D (Total Tax) |
+| :---: | :--- | :---: | :---: | :--- |
+| **1** | — | — | **0.18** | |
+| **2** | Laptop | `$1,000` | | `=B2 * $C$1` |
+| **3** | Mouse | `$25` | | `=B3 * $C$1` |
+| **4** | Keyboard | `$75` | | `=B4 * $C$1` |
+
+* `B2` changes dynamically to `B3` and `B4` (relative).
+* `$C$1` stays locked to row 1, column C across all rows (absolute).
+
+---
+
+### 3. Mixed Reference (`$A1` or `A$1`)
+
+A mixed reference locks either the column or the row while allowing the other coordinate to adjust dynamically.
+
+* **Row Locked (`A$1`):** The column shifts when dragging horizontally, but the row remains fixed when dragging vertically.
+* **Column Locked (`$A1`):** The column remains fixed when dragging horizontally, but the row updates when dragging vertically.
+
+#### 📊 Worksheet Grid View (Multiplication Matrix):
+
+| Row | Column A | Column B | Column C |
+| :---: | :---: | :---: | :---: |
+| **1** | **Base Value** | **2** | **3** |
+| **2** | **10** | `=$A2 * B$1` → **20** | `=$A2 * C$1` → **30** |
+| **3** | **20** | `=$A3 * B$1` → **40** | `=$A3 * C$1` → **60** |
+
+* `=$A2`: Column `A` is locked so dragging right continues reading base values from column A.
+* `B$1`: Row `1` is locked so dragging down continues referencing multiplier headers from row 1.
+
+---
+
+### 📊 Summary Reference Chart
+
+| Reference Type | Syntax | Dragging Down | Dragging Right | Best Used For |
+| :--- | :---: | :---: | :---: | :--- |
+| **Relative** | `A1` | Changes (`A2`) | Changes (`B1`) | Standard row-by-row or col-by-col calculations |
+| **Absolute** | `$A$1` | Fixed (`$A$1`) | Fixed (`$A$1`) | Constant global values (tax, interest rates, constants) |
+| **Mixed (Row Lock)** | `A$1` | Fixed (`A$1`) | Changes (`B$1`) | Table header rows across multiple columns |
+| **Mixed (Column Lock)** | `$A1` | Changes (`$A2`) | Fixed (`$A1`) | Table header columns down multiple rows |
